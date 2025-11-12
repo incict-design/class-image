@@ -25,7 +25,40 @@ body { box-sizing: border-box; font-family: system-ui,-apple-system,"メイリ�
 .schedule-content { font-size:15px; line-height:1.6; color:#555; }
 .change-item { margin:8px 0; padding:8px 12px; background:white; border-radius:8px; border-left:3px solid #f5576c; }
 .uploader { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:30px; }
-#gallery { display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:12px; margin-top:20px; }
+#gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* iPhoneで3列固定 */
+  gap: 10px;
+  justify-items: center;
+  margin-top: 20px;
+}
+
+.card {
+  width: 110px;       /* 固定幅 */
+  height: 150px;      /* 固定高さ */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 6px;
+  background: white;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.2s;
+}
+
+.card img {
+  width: 100px;       /* 固定サイズ */
+  height: 100px;      /* 正方形で統一 */
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.meta {
+  font-size: 11px;
+  color: #555;
+  margin-top: 4px;
+  text-align: center;
+  white-space: pre-line;
+}
 .card { border:1px solid #ddd; border-radius:8px; padding:8px; background:white; cursor:pointer; position:relative; transition:transform 0.2s; }
 .card:hover { transform:scale(1.05); }
 .card img { width:100%; height:140px; object-fit:cover; border-radius:6px; }
@@ -239,4 +272,3 @@ modal.addEventListener("click", ()=>{ modal.style.display="none"; modalImg.src="
 </script>
 </body>
 </html>
-
