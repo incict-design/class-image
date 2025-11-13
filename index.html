@@ -94,6 +94,17 @@ button{ cursor:pointer; padding:4px 10px; border-radius:6px; border:1px solid #b
 .auth input{ margin-bottom:4px; display:block; padding:4px 6px;}
 .auth-row{ display:flex; gap:10px; align-items:flex-end; margin-bottom:4px; }
 .auth-row input{ flex:1; }
+
+#displayName {
+  width: 100%;
+  max-width: 240px; /* 好きな幅に調整 */
+  padding: 6px 8px;
+  box-sizing: border-box;
+}
+
+
+
+
 </style>
 </head>
 <body>
@@ -149,14 +160,14 @@ button{ cursor:pointer; padding:4px 10px; border-radius:6px; border:1px solid #b
     <div id="authStatus">未ログイン</div>
     <div class="auth-row">
       <input id="email" type="email" placeholder="メールアドレス">
-      <input id="password" type="password" placeholder="パスワード">
+      <input id="password" type="password" placeholder="パスワード：6桁以上">
     </div>
     <div class="auth-row">
       <button id="registerBtn">新規登録</button>
       <button id="loginBtn">ログイン</button>
       <button id="logoutBtn" style="display:none;">ログアウト</button>
     </div>
-    <input id="displayName" type="text" placeholder="新規登録時のみ入力">
+    <input id="displayName" type="text" placeholder="ユーザー名：新規登録時のみ入力">
   </section>
 </main>
 
@@ -181,11 +192,11 @@ const scheduleData = {
 };
 
 const omikujiResults = [
-  {name:'凶',text:'隕石がぶつかる'},
-  {name:'吉',text:'常北ファームで愛のささやき'},
-  {name:'末吉',text:'脳筋大爆発！'},
+  {name:'大狂',text:'隕石がぶつかる'},
+  {name:'凶',text:'水鉄砲で撃たれる'},
+  {name:'吉',text:'脳筋大爆発！'},
   {name:'小吉',text:'脳みそ絶対零度'},
-  {name:'中吉',text:'宇佐美を独り占め'},
+  {name:'中吉',text:'常北ファームで愛のささやき'},
   {name:'大吉',text:'萩谷と睨めっこ'}
 ];
 
@@ -259,7 +270,7 @@ reg.onclick=async()=>{
     const u=await auth.createUserWithEmailAndPassword(emailV,passV);
     await u.user.updateProfile({displayName:nameV});
     await u.user.sendEmailVerification();
-    alert("確認メールを送信しました。メールを確認してください。");
+    alert("確認メールを送信しました。迷惑メールフォルダもご確認ください。");
   }catch(e){alert(e.message);}
 };
 
@@ -317,4 +328,5 @@ db.collection("test-images").onSnapshot(snap=>{
 overlay.onclick=()=>{overlay.style.display="none";overlayImg.src="";};
 </script>
 </body>
+</html>
 </html>
