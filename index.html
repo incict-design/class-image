@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>クラス連絡＋画像共有アプリ</title>
+<title>クラス連絡アプリ</title>
 <style>
 body { box-sizing: border-box; font-family: system-ui,-apple-system,"メイリオ",sans-serif; margin:0; padding:20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:#333; }
 .container { max-width:900px; margin:0 auto; background:white; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.2); overflow:hidden; padding:20px; }
@@ -24,52 +24,6 @@ body { box-sizing: border-box; font-family: system-ui,-apple-system,"メイリ�
 .schedule-date { font-size:18px; font-weight:600; color:#4facfe; margin-bottom:15px; padding-bottom:8px; border-bottom:2px solid #e1e8ff; }
 .schedule-content { font-size:15px; line-height:1.6; color:#555; }
 .change-item { margin:8px 0; padding:8px 12px; background:white; border-radius:8px; border-left:3px solid #f5576c; }
-.uploader { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:30px; }
-
-/* --- ギャラリーのレスポンシブ対応 --- */
-#gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  justify-items: center;
-  margin-top: 20px;
-}
-@media (max-width: 480px) {
-  #gallery {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.card {
-  width: 110px;
-  height: 150px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 6px;
-  background: white;
-  cursor: pointer;
-  position: relative;
-  transition: transform 0.2s;
-}
-.card img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 6px;
-}
-.meta {
-  font-size: 11px;
-  color: #555;
-  margin-top: 4px;
-  text-align: center;
-  white-space: pre-line;
-}
-.card:hover { transform:scale(1.05); }
-.delete-btn { position:absolute; top:6px; right:6px; background:red; color:white; border:none; border-radius:4px; padding:2px 6px; font-size:12px; cursor:pointer; }
-#modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:9999; }
-#modal img { max-width:90%; max-height:90%; border-radius:10px; }
-#status { font-size:13px; color:#333; margin-top:5px; }
-button { cursor:pointer; padding:8px 12px; border-radius:6px; border:1px solid #bbb; background:#f7f7f7; }
 
 /* --- なぞると光るエリア --- */
 #drawArea {
@@ -128,27 +82,8 @@ button { cursor:pointer; padding:8px 12px; border-radius:6px; border:1px solid #
     </div>
   </div>
 
-  <!-- ★ なぞると光るエリアを追加（ここに光が出る） -->
+  <!-- ★ なぞると光るエリア -->
   <div id="drawArea"></div>
-
-  <section>
-    <h2>画廊SHION</h2>
-    <div id="gallery"></div>
-  </section>
-
-  <section class="uploader">
-    <label>投稿者名（必須）<br><input id="username" type="text" placeholder=""></label>
-    <label>画像を選択<br><input id="fileInput" type="file" accept="image/*"></label>
-    <button id="uploadBtn">アップロード</button>
-    <div id="status"></div>
-  </section>
-
-<div id="modal"><img id="modalImg" src=""></div>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-
 </main>
 
 <script>
@@ -209,91 +144,6 @@ function showSchedule(key){
   d.classList.add('show');
 }
 
-// ===== Firebase初期化 =====
-const firebaseConfig = {
-  apiKey: "AIzaSyCzDqI2YaOLoU4muurvvxBs4fOOSkH8Yew",
-  authDomain: "image-share-89916.firebaseapp.com",
-  projectId: "image-share-89916",
-  storageBucket: "image-share-89916.firebasestorage.app",
-  messagingSenderId: "859639070035",
-  appId: "1:859639070035:web:aab7543659c3d1a877f5a6"
-};
-firebase.initializeApp(firebaseConfig);
-const db=firebase.firestore();
-const storage=firebase.storage();
-
-const usernameInput = document.getElementById("username");
-const fileInput = document.getElementById("fileInput");
-const uploadBtn = document.getElementById("uploadBtn");
-const status = document.getElementById("status");
-const gallery = document.getElementById("gallery");
-const modal = document.getElementById("modal");
-const modalImg = document.getElementById("modalImg");
-
-// ===== FireStorage画像アップロード =====
-uploadBtn.addEventListener("click", async ()=>{
-  const name=usernameInput.value.trim();
-  const file=fileInput.files[0];
-  if(!name){ status.textContent="投稿者名を入力してください。"; return; }
-  if(!file){ status.textContent="画像を選択してください。"; return; }
-  uploadBtn.disabled=true; status.textContent="アップロード中...";
-  try{
-    const ref=storage.ref("test-images/"+name+".jpg");
-    await ref.put(file);
-    const url=await ref.getDownloadURL();
-    await db.collection("test-images").doc(name).set({username:name,url:url,updatedAt:new Date()});
-    status.textContent="アップロード完了！";
-    fileInput.value="";
-  }catch(e){ console.error(e); status.textContent="アップロード失敗。"; }
-  finally{ uploadBtn.disabled=false; }
-});
-
-// ===== ギャラリー更新 =====
-db.collection("test-images").onSnapshot(snapshot=>{
-  gallery.innerHTML="";
-  snapshot.forEach(doc=>{
-    const data=doc.data();
-    const div=document.createElement("div");
-    div.className="card";
-    const docId = doc.id;
-
-    const imgEl = document.createElement("img");
-    imgEl.src = data.url;
-    div.appendChild(imgEl);
-
-    const metaDiv = document.createElement("div");
-    metaDiv.className="meta";
-    metaDiv.textContent = `${data.username}\n${new Date(data.updatedAt.seconds*1000).toLocaleString()}`;
-    div.appendChild(metaDiv);
-
-    // FireStorageに存在するかチェック
-    storage.ref("test-images/"+data.username+".jpg").getMetadata()
-      .then(()=>{})
-      .catch(()=>{
-        const delBtn = document.createElement("button");
-        delBtn.className="delete-btn";
-        delBtn.textContent="削除";
-        delBtn.addEventListener("click", async e=>{
-          e.stopPropagation();
-          if(!confirm("Fire Storage上の画像は削除済みです。Firestoreからも削除しますか？")) return;
-          try{
-            await db.collection("test-images").doc(docId).delete();
-            status.textContent="Firestore上のデータを削除しました";
-          }catch(err){
-            console.error(err);
-            status.textContent="削除失敗";
-          }
-        });
-        div.appendChild(delBtn);
-      });
-
-    imgEl.addEventListener("click", ()=>{ modalImg.src=data.url; modal.style.display="flex"; });
-    gallery.appendChild(div);
-  });
-});
-
-modal.addEventListener("click", ()=>{ modal.style.display="none"; modalImg.src=""; });
-
 // ===== 光る描画機能 =====
 const drawArea = document.getElementById("drawArea");
 drawArea.addEventListener("pointermove", (e)=>{
@@ -309,3 +159,4 @@ drawArea.addEventListener("pointermove", (e)=>{
 </script>
 </body>
 </html>
+
