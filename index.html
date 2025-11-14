@@ -55,16 +55,20 @@ body {
 .schedule-content { font-size:15px; line-height:1.6; color:#555; }
 .change-item { margin:8px 0; padding:8px 12px; background:white; border-radius:8px; border-left:3px solid #f5576c; }
 
-/* ===== なぞると光るエリア ===== */
+/* ===== Webページ表示エリア ===== */
 #drawArea {
-  margin: 20px 0; width: 100%; height: 300px; background: black;
-  border-radius: 12px; position: relative; overflow: hidden; touch-action: none;
+  margin: 20px 0;
+  width: 100%;
+  height: 300px;
+  border-radius: 12px;
+  overflow: auto;
+  border: 2px solid #ddd;
 }
-.spark {
-  position: absolute; width: 20px; height: 20px; border-radius: 50%;
-  pointer-events: none; opacity: 0.8; animation: fadeOut 1s forwards;
+#drawFrame {
+  width: 100%;
+  height: 100%;
+  border: none;
 }
-@keyframes fadeOut { to { opacity: 0; transform: scale(2); } }
 
 /* ===== ギャラリー ===== */
 #gallery {
@@ -94,17 +98,12 @@ button{ cursor:pointer; padding:4px 10px; border-radius:6px; border:1px solid #b
 .auth input{ margin-bottom:4px; display:block; padding:4px 6px;}
 .auth-row{ display:flex; gap:10px; align-items:flex-end; margin-bottom:4px; }
 .auth-row input{ flex:1; }
-
 #displayName {
   width: 100%;
-  max-width: 240px; /* 好きな幅に調整 */
+  max-width: 240px;
   padding: 6px 8px;
   box-sizing: border-box;
 }
-
-
-
-
 </style>
 </head>
 <body>
@@ -140,8 +139,19 @@ button{ cursor:pointer; padding:4px 10px; border-radius:6px; border:1px solid #b
     </div>
   </div>
 
-  <!-- 光る描画エリア -->
-  <div id="drawArea"></div>
+
+
+ <!-- Webページ表示エリア -->
+  <div id="drawArea">
+    <iframe id="drawFrame" src="https://incict-design.github.io/spelling/" allowfullscreen></iframe>
+  </div>
+
+
+
+  <!-- Webページ表示エリア -->
+  <div id="drawArea">
+    <iframe id="drawFrame" src="https://incict-design.github.io/hikariplay/" allowfullscreen></iframe>
+  </div>
 
   <!-- ギャラリー -->
   <section>
@@ -190,7 +200,6 @@ const scheduleData = {
   'test3': { date: '11月20日（木）', content: '<div class="change-item">1限：古典探究</div><div class="change-item">2限：英語CⅡ</div>' },
   'test4': { date: '11月21日（金）', content: '<div class="change-item">1限：物理/生物</div><div class="change-item">2限：数学ⅡB</div>' }
 };
-
 const omikujiResults = [
   {name:'大狂',text:'隕石注意'},
   {name:'凶',text:'水鉄砲で撃たれる'},
@@ -229,19 +238,6 @@ function showSchedule(k){
   d.classList.add("show");
 }
 
-// ===== 光る描画 =====
-const drawArea=document.getElementById("drawArea");
-drawArea.addEventListener("pointermove", e=>{
-  const s=document.createElement("div");
-  s.className="spark";
-  const hue=Math.floor(Math.random()*360);
-  s.style.background=`hsl(${hue},100%,60%)`;
-  s.style.left=(e.offsetX-10)+"px";
-  s.style.top=(e.offsetY-10)+"px";
-  drawArea.appendChild(s);
-  setTimeout(()=>s.remove(),1000);
-});
-
 // ===== Firebase 画像共有 =====
 const firebaseConfig = {
   apiKey: "AIzaSyCzDqI2YaOLoU4muurvvxBs4fOOSkH8Yew",
@@ -262,7 +258,6 @@ upload=document.getElementById("uploadBtn"), status=document.getElementById("sta
 gallery=document.getElementById("gallery"), overlay=document.getElementById("overlay"),
 overlayImg=document.getElementById("overlayImg");
 
-// --- 認証 ---
 reg.onclick=async()=>{
   const emailV=email.value.trim(), passV=pass.value, nameV=nameField.value.trim();
   if(!emailV||!passV||!nameV){alert("全て入力してください");return;}
@@ -293,7 +288,6 @@ logout.onclick=async()=>{
   reg.style.display=login.style.display="inline-block";
 };
 
-// --- アップロード ---
 upload.onclick=async()=>{
   const user=auth.currentUser;
   if(!user||!user.emailVerified){status.textContent="ログインしてメール認証を完了してください";return;}
@@ -313,7 +307,6 @@ upload.onclick=async()=>{
   finally{upload.disabled=false;}
 };
 
-// --- ギャラリー ---
 db.collection("test-images").onSnapshot(snap=>{
   gallery.innerHTML="";
   snap.forEach(doc=>{
@@ -329,4 +322,4 @@ overlay.onclick=()=>{overlay.style.display="none";overlayImg.src="";};
 </script>
 </body>
 </html>
-</html>
+
