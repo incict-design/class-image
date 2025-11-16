@@ -103,7 +103,7 @@ button { cursor: pointer; padding: 6px 10px; border-radius: 6px; border: 1px sol
 <body>
 
 <header>
-  <h1>11月17日（月）</h1>
+  <h1>11月18日（火）</h1>
   <div id="status" style="margin-left:auto"></div>
 </header>
 
@@ -115,7 +115,6 @@ button { cursor: pointer; padding: 6px 10px; border-radius: 6px; border: 1px sol
 
 <!-- --- スケジュール --- -->
 <div class="date-buttons">
-  <button class="date-button fancy-btn fancy-blue" onclick="showSchedule('today')">本日</button>
   <button class="date-button fancy-btn fancy-blue" onclick="showSchedule('tomorrow')">11/18（火）</button>
   <button class="date-button fancy-btn fancy-blue" onclick="showSchedule('following')">11/19（水）</button>
   <button class="date-button fancy-btn fancy-blue" onclick="showSchedule('test3')">11/20（木）</button>
@@ -173,7 +172,6 @@ button { cursor: pointer; padding: 6px 10px; border-radius: 6px; border: 1px sol
 <script>
 // ===== おみくじ・スケジュール =====
 const scheduleData = {
-  'today': { date: '本日', content: '<div>趣味は勉強、特技はテスト</div>' },
   'tomorrow': { date: '11/18（火）', content: '<div>1限：論理国語</div><div>2限：文：生物基礎 / 理：化学</div>' },
   'following': { date: '11/19（水）', content: '<div>1限：公共</div><div>2限：論理・表現Ⅱ</div><div>3限：４組のみ：地理探究</div>' },
   'test3': { date: '11/20（木）', content: '<div>1限：古典探究</div><div>2限：英語CⅡ</div>' },
