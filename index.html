@@ -103,7 +103,7 @@ button { cursor: pointer; padding: 6px 10px; border-radius: 6px; border: 1px sol
 <body>
 
 <header>
-  <h1>11月18日（火）</h1>
+  <h1>11月20日（木）</h1>
   <div id="status" style="margin-left:auto"></div>
 </header>
 
@@ -115,11 +115,11 @@ button { cursor: pointer; padding: 6px 10px; border-radius: 6px; border: 1px sol
 
 <!-- --- スケジュール --- -->
 <div class="date-buttons">
-  <button class="date-button fancy-btn fancy-blue" onclick="showSchedule('tomorrow')">11/18（火）</button>
-  <button class="date-button fancy-btn fancy-blue" onclick="showSchedule('following')">11/19（水）</button>
-  <button class="date-button fancy-btn fancy-blue" onclick="showSchedule('test3')">11/20（木）</button>
-  <button class="date-button fancy-btn fancy-blue" onclick="showSchedule('test4')">11/21（金）</button>
- <button class="date-button fancy-btn fancy-blue" onclick="showSchedule('test5')">試験上の注意</button>
+ <button class="date-button fancy-btn fancy-blue" onclick="showSchedule('today')">本日</button>
+  <button class="date-button fancy-btn fancy-blue" onclick="showSchedule('tomorrow')">明日</button>
+  <button class="date-button fancy-btn fancy-blue" onclick="showSchedule('following')">明後日</button>
+  <button class="date-button fancy-btn fancy-blue" onclick="showSchedule('notice')">諸連絡</button>
+ 
 </div>
 
 <div id="scheduleDisplay" class="schedule-display">
@@ -172,11 +172,12 @@ button { cursor: pointer; padding: 6px 10px; border-radius: 6px; border: 1px sol
 <script>
 // ===== おみくじ・スケジュール =====
 const scheduleData = {
-  'tomorrow': { date: '11/18（火）', content: '<div>1限：論理国語</div><div>2限：文：生物基礎 / 理：化学</div>' },
-  'following': { date: '11/19（水）', content: '<div>1限：公共</div><div>2限：論理・表現Ⅱ</div><div>3限：４組のみ：地理探究</div>' },
-  'test3': { date: '11/20（木）', content: '<div>1限：古典探究</div><div>2限：英語CⅡ</div>' },
-  'test4': { date: '11/21（金）', content: '<div>1限：文：世・日 / 理：物・生</div><div>2限：数学</div>' },
- 'test5': { date: '試験上の注意', content: '<div>【試験場の注意】</div><div>①不正行為の厳禁</div><div>②下敷の使用禁止</div><div>③膝掛使用禁止</div><div>④机上に置くのは、シャープペンシル・鉛筆と消しゴムのみ（ペンケースは置かない）。</div><div>⑤机の中には物を入れて置かない（聖書・讃美歌等も入れて置かない）。</div><div>⑥試験開始5分前には着席し、監督の先生を静かに待つ。</div><div>⑦試験は落ち着いた態度で受験し、誤解を招くことのないようにする。</div><div>⑧机上の落書きは消しておくこと。</div><div>⑨携帯電話(スマートウォッチ等インターネット機能付き電子機器を含む)は机の上や中に置いたり、ポケットに入れたりせず、必ず電源を切ってバッグの中に入れておく。</div><div>⑩カバンはファスナーを閉めて椅子の下に置き、カバンの中が見えないようにする。</div><div>⑪複数科目が同一時間にある場合は、科目ごとに座席を移動する。</div>' }
+  'today': { date: '本日', content: '<div>【後期中間試験3日目】</div><div>1限：古典探究</div><div>2限：英語CⅡ</div>' },
+
+ 'tomorrow': { date: '明日', content: '<div>【後期中間試験最終日】</div><div>1限：物理/生物</div><div>2限：数学ⅡB</div>' },
+  'following': { date: '明後日', content: '<div>授業変更はありません。</div>' },
+ 
+  'notice': { date: '諸連絡', content: '<div>11/22（土）1限はキーボードを使います。</div>' }
 };
 
 const omikujiResults = [
