@@ -119,6 +119,7 @@ button { cursor: pointer; padding: 6px 10px; border-radius: 6px; border: 1px sol
   <button class="date-button fancy-btn fancy-blue" onclick="showSchedule('tomorrow')">明日</button>
   <button class="date-button fancy-btn fancy-blue" onclick="showSchedule('following')">明後日</button>
   <button class="date-button fancy-btn fancy-blue" onclick="showSchedule('notice')">諸連絡</button>
+<button class="date-button fancy-btn fancy-blue" onclick="showSchedule('xmas')">追試</button>
  
 
 </div>
@@ -176,12 +177,11 @@ const scheduleData = {
   'today': { date: '本日', content: '<div>3限：古典探究</div><div>6限：LHR</div><div>7限：探究</div>' },
 
  'tomorrow': { date: '明日', content: '<div>6限：LHR</div>' },
-  'following': { date: '明後日', content: '<div>趣味は勉強、特技はテスト</div>' },
+  'following': { date: '明後日', content: '<div>予定は未定</div>' },
  
-  'notice': { date: '諸連絡', content: '<div>【追試】後期中間試験追試の場所は大会議室（職員室上）です。</div><div>【一貫部】4限後すぐに4号館ホールで讃美歌練習（10分ほど）</div><div>【国際理解講演会】アンケート未回答の生徒はすぐに回答すること。</div><div>【コース希望調査】締切は11月27日（木）です。</div>' },
+  'notice': { date: '諸連絡', content: '<div>【一貫部】4限後すぐに4号館ホールで讃美歌練習（10分ほど）</div><div>【国際理解講演会】アンケート未回答の生徒はすぐに回答すること。</div><div>【コース希望調査】締切は11月26日（水）でした。</div><div>【私物整理】11月30日（日）に中学生が模試でこの教室を使います。私物は教室内ではなくロッカーの中に入れておくこと。ハンガー掛けも使用しないこと。</div>' },
 
- 'xmas': { date: 'Chrsitmas Market', content: '<div>15時30分～16時45分：マーケット（PayPay可）</div><div>17時00分～17時30分：点灯式</div><div>17時30分～18時00分：マーケット（PayPay可）</div><div>・キッチンカー１台（チュロス、ふりふりポテト、各種ジュース類）</div><div>・グリーンスポット（お花屋さん）</div><div>・いのちのことば社によるクリスマス関連グッズ（キリスト教専門の本屋さんです。アドベントカレンダー、クリスマスカード、クリスマスの本など）</div><div>・「はしっぽ」</div><div>・まつぼっくりを使った装飾、キャンドル、クリスマスの装飾類、オーナメントなど</div><div>・家庭部生徒によるホットチョコ</div><div>・ローゼンブルクのシュトーレン（カットしたものを個包装）</div>' }
-
+ 'xmas': { date: '追試（大会議室）', content: '<div>【11月26日（水）】1限：地理探究</div><div>【11月27日（木）】1限：論国、2限：化学、3限：公共、4限：論表</div><div>【11月28日（金）】1限：古典探究、2限：英語CⅡ、3限：物理、4限：数学ⅡB</div>' }
 
 };
 
